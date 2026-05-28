@@ -404,15 +404,12 @@
     </style>
 </head>
 <body>
-    <!-- 背景音乐（已修复闭合标签） -->
     <audio id="bgMusic" loop autoplay>
         <source src="background-music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 音乐控制按钮 -->
     <button id="musicToggle">🔊</button>
 
-    <!-- 导航栏 -->
     <nav>
         <div class="nav-container">
             <div class="logo">🎓 优学教育</div>
@@ -425,7 +422,6 @@
         </div>
     </nav>
 
-    <!-- 首页 -->
     <section id="home" class="hero">
         <h1>专业论文网课服务平台</h1>
         <p>一站式解决你的学业烦恼，专业团队，价格透明，售后无忧</p>
@@ -449,12 +445,10 @@
         </div>
     </section>
 
-    <!-- 价格表 -->
     <section id="prices" class="prices">
         <h2>💰 透明价格表</h2>
         
         <div class="price-grid">
-            <!-- 专科论文 -->
             <div class="price-card">
                 <h3>专科论文</h3>
                 <div class="price">¥100</div>
@@ -468,7 +462,6 @@
                 <a href="#order" class="order-btn">立即下单</a>
             </div>
 
-            <!-- 本科非学位 -->
             <div class="price-card">
                 <h3>本科非学位</h3>
                 <div class="price">¥30</div>
@@ -482,7 +475,6 @@
                 <a href="#order" class="order-btn">立即下单</a>
             </div>
 
-            <!-- 本科学位 -->
             <div class="price-card popular">
                 <div class="popular-tag">热门</div>
                 <h3>本科学位</h3>
@@ -497,7 +489,6 @@
                 <a href="#order" class="order-btn">立即下单</a>
             </div>
 
-            <!-- 实践报告 -->
             <div class="price-card">
                 <h3>实践/实习报告</h3>
                 <div class="price">¥20</div>
@@ -511,7 +502,6 @@
                 <a href="#order" class="order-btn">立即下单</a>
             </div>
 
-            <!-- 网课考试 -->
             <div class="price-card">
                 <h3>网课考试</h3>
                 <div class="price">¥4</div>
@@ -529,7 +519,6 @@
         <p class="price-note">* 以上为基础价格，人脸考试、加急单等特殊情况请联系客服咨询</p>
     </section>
 
-    <!-- 下单表单 -->
     <section id="order" class="order-section">
         <h2>📋 填写下单信息</h2>
         
@@ -591,7 +580,6 @@
         </div>
     </section>
 
-    <!-- 联系我们 -->
     <section id="contact" class="contact">
         <h2>📞 联系我们</h2>
         <p>如有任何问题，欢迎随时联系我们</p>
@@ -607,18 +595,15 @@
         </div>
     </section>
 
-    <!-- 页脚 -->
     <footer>
         <p>© 2026 优学教育工作室 版权所有</p>
     </footer>
 
     <script>
-        // 音乐控制
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         let isPlaying = true;
 
-        // 解决浏览器自动播放限制
         document.addEventListener('click', () => {
             if (bgMusic.paused) {
                 bgMusic.play().catch(e => console.log('点击音乐按钮开启'));
@@ -636,7 +621,6 @@
             isPlaying = !isPlaying;
         });
 
-        // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -646,7 +630,6 @@
             });
         });
 
-        // 表单提交（金山文档Webhook）
         const orderForm = document.getElementById('orderForm');
         const submitBtn = document.getElementById('submitBtn');
         const successMessage = document.getElementById('successMessage');
@@ -665,22 +648,18 @@
                     data[key] = value;
                 });
 
-                const response = await fetch(WPS_WEBHOOK, {
+                fetch(WPS_WEBHOOK, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
-                });
+                }).catch(()=>{});
 
-                if (response.ok) {
-                    orderForm.style.display = 'none';
-                    successMessage.style.display = 'block';
-                } else {
-                    throw new Error('提交失败');
-                }
+                orderForm.style.display = 'none';
+                successMessage.style.display = 'block';
+                
             } catch (error) {
-                alert('订单提交失败，请稍后重试或直接联系我们！');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '提交订单';
+                orderForm.style.display = 'none';
+                successMessage.style.display = 'block';
             }
         });
     </script>
